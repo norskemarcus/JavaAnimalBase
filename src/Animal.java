@@ -17,6 +17,22 @@ public class Animal {
         return name;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return name + " the " + desc + " " + type + ", age " + age + ", weight " + weight +"kg";
