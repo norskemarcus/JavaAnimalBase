@@ -6,8 +6,4 @@ public class NameComparator implements Comparator<Animal> {
     return o1.getName().compareTo(o2.getName());
   }
 
-  @Override
-  public Comparator<Animal> reversed() {
-    return Comparator.super.reversed();
-  }
 }

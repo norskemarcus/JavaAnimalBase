@@ -45,7 +45,7 @@ public class AnimalBase {
                 animals.sort(comparator);
             }
             case "weight" -> {
-                comparator = new WeightComparator();
+                comparator = new WeightComparator(sortDirection);
                 animals.sort(comparator);
             }
             default -> {
@@ -53,14 +53,6 @@ public class AnimalBase {
                 animals.sort(comparator);
             }
         }
-
-          if (sortDirection == SortDirection.DESC) {
-              Collections.reverse(animals);
-
-          } else if (sortDirection == SortDirection.TOGGLE){
-              // skal huske om sidste sortering var asc eller desc?
-              Collections.reverse(animals);
-          }
 
         System.out.println("Sort the list of animals by: " + sortBy);
     }

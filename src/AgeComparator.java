@@ -7,8 +7,4 @@ public class AgeComparator implements Comparator<Animal> {
     return o1.getAge() - o2.getAge();
   }
 
-  @Override
-  public Comparator<Animal> reversed() {
-    return Comparator.super.reversed();
-  }
 }

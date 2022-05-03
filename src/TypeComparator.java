@@ -7,8 +7,4 @@ public class TypeComparator implements Comparator<Animal> {
     return o1.getType().compareTo(o2.getType());
   }
 
-  @Override
-  public Comparator<Animal> reversed() {
-    return Comparator.super.reversed();
-  }
 }
