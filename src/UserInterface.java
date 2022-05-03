@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -5,12 +6,16 @@ import java.util.Scanner;
 public class UserInterface {
 
     private final AnimalBase application;
+    private FileHandler fileHandler;
+    private AnimalBase animalBase;
 
     public UserInterface(AnimalBase application) {
         this.application = application;
+        this.fileHandler = new FileHandler();
+        this.animalBase = new AnimalBase();
     }
 
-    public void start() throws FileNotFoundException {
+    public void start() {
         System.out.println("Welcome to ANIMALBASE 2022");
         System.out.println("==========================");
         System.out.println("Java edition\n");
@@ -54,11 +59,13 @@ public class UserInterface {
     }
 
     private void exit() {
-        // TODO: Maybe save before exiting???
+        //TODO: Programmet skal ikke kunne afsluttes uden at det er gemt - boolean
+        save();
         System.out.println("Thank you for using ANIMALBASE 2022");
         System.out.println("Please consider upgrading to Enterprise Edition!");
         System.out.println("Subscribe to our newsletter with all the details you need about creating lists of animals!");
         System.exit(0);
+
     }
 
     private void list() {
@@ -158,16 +165,24 @@ public class UserInterface {
         }
     }
 
-    private void load() throws FileNotFoundException {
+    private void load() {
         System.out.println("Loading the database ...");
+
         application.loadDatabase();
         System.out.println("Done!");
     }
 
-    private void save() throws FileNotFoundException {
+    private void save() {
+
         System.out.println("Saving the database ...");
-        application.saveDatabase();
-        System.out.println("Saving database completed succesfully");
+        try{
+            application.saveDatabase();
+        }
+        catch (DatabaseException exception){
+            System.out.println("\u001b[1;31m ERROR: Could not save to file!\u001b[m");
+
+        }
+        System.out.println("Saving database completed successfully");
         System.out.println("You can now exit the application");
     }
 

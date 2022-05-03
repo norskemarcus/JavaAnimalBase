@@ -1,9 +1,5 @@
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class AnimalBase {
 
@@ -13,12 +9,12 @@ public class AnimalBase {
         animals = new ArrayList<>();
     }
 
-    public void start() throws FileNotFoundException {
+    public void start() {
         UserInterface ui = new UserInterface(this);
         ui.start();
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         AnimalBase app = new AnimalBase();
         app.start();
     }
@@ -26,6 +22,7 @@ public class AnimalBase {
     public Iterable<Animal> getAllAnimals() {
         return animals;
     }
+    
 
     public int getAnimalCount() {
         return animals.size();
@@ -61,45 +58,20 @@ public class AnimalBase {
         return null;
     }
 
+    public void saveDatabase() {
 
-    public void loadDatabase() throws FileNotFoundException {
-        Scanner fileScanner = new Scanner(new File("animals.csv"));
-
-        while(fileScanner.hasNextLine()){
-            String line = fileScanner.nextLine();
-            Scanner input = new Scanner(line).useDelimiter(";").useLocale(Locale.ENGLISH);
-            String name = input.next();
-            String description = input.next();
-            String type = input.next();
-            int age = input.nextInt();
-            double weight = input.nextDouble();
-
-            Animal animal = new Animal(name, description, type, age, weight);
-            animals.add(animal);
-        }
-
+    try{
+        FileHandler fileHandler = new FileHandler();
+        fileHandler.saveAnimalsToFile(animals);
+    } catch (DatabaseException exception ){
+        System.err.println("Could not save to file");
+    }
 
     }
 
-    public void saveDatabase() throws FileNotFoundException {
-
-        PrintStream out = new PrintStream("animals.csv");
-
-        // Animal(String name, String desc, String type, int age, double weight)
-        for(Animal animal : animals){
-            out.print(animal.getName());
-            out.print(";");
-            out.print(animal.getDesc());
-            out.print(";");
-            out.print(animal.getType());
-            out.print(";");
-            out.print(animal.getAge());
-            out.print(";");
-            out.print(animal.getWeight());
-            out.print("\n");
-
-        }
-
+    public void loadDatabase() {
+        FileHandler fileHandler = new FileHandler();
+        // animals.addAll(fileHandler.loadAnimalsFromFile()); // hver gang vi loader bliver listen længere og længere!
+        animals = fileHandler.loadAnimalsFromFile(); // kan slette dyr vi har lavet manuelt
     }
-
 }
