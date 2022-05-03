@@ -33,64 +33,34 @@ public class AnimalBase {
 
     public void sortBy(String sortBy, SortDirection sortDirection) {
 
-        Comparator comparator = null;
+        Comparator<Animal> comparator;
 
-        if (sortDirection == SortDirection.ASC){
-            switch (sortBy) {
-                case "age" -> {
-                    comparator = new AgeComparator();
-                    Collections.sort(animals, comparator);
-                }
-                case "name" -> {
-                    comparator = new NameComparator();
-                    Collections.sort(animals, comparator);
-                }
-                case "type" -> {
-                    comparator = new TypeComparator();
-                    Collections.sort(animals, comparator);
-                }
-                case "weight" -> {
-                    comparator = new WeightComparator();
-                    Collections.sort(animals, comparator);
-                }
-                default -> {
-                    comparator = new NameComparator();
-                    Collections.sort(animals, comparator);
-                }
+        switch (sortBy) {
+            case "age" -> {
+                comparator = new AgeComparator();
+                animals.sort(comparator);
             }
-        } else if (sortDirection == SortDirection.DESC){
-
-            switch (sortBy) {
-                case "age" -> {
-                    comparator = new AgeComparator();
-                    Collections.sort(animals, comparator);
-                    Collections.reverse(animals);
-                }
-                case "name" -> {
-                    comparator = new NameComparator();
-                    Collections.sort(animals, comparator);
-                    Collections.reverse(animals);
-                }
-                case "type" -> {
-                    comparator = new TypeComparator();
-                    Collections.sort(animals, comparator);
-                    Collections.reverse(animals);
-                }
-                case "weight" -> {
-                    comparator = new WeightComparator();
-                    Collections.sort(animals, comparator);
-                    Collections.reverse(animals);
-                }
-                default -> {
-                    comparator = new NameComparator();
-                    Collections.sort(animals, comparator);
-                    Collections.reverse(animals);
-                }
+            case "type" -> {
+                comparator = new TypeComparator();
+                animals.sort(comparator);
             }
-
-         } else if (sortDirection == SortDirection.TOGGLE){
-            Collections.reverse(animals);
+            case "weight" -> {
+                comparator = new WeightComparator();
+                animals.sort(comparator);
+            }
+            default -> {
+                comparator = new NameComparator();
+                animals.sort(comparator);
+            }
         }
+
+          if (sortDirection == SortDirection.DESC) {
+              Collections.reverse(animals);
+
+          } else if (sortDirection == SortDirection.TOGGLE){
+              // skal huske om sidste sortering var asc eller desc?
+              Collections.reverse(animals);
+          }
 
         System.out.println("Sort the list of animals by: " + sortBy);
     }
