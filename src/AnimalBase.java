@@ -1,5 +1,8 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class AnimalBase {
 
@@ -22,15 +25,74 @@ public class AnimalBase {
     public Iterable<Animal> getAllAnimals() {
         return animals;
     }
-    
+
 
     public int getAnimalCount() {
         return animals.size();
     }
 
     public void sortBy(String sortBy, SortDirection sortDirection) {
-        // TODO: Implement sorting!
-        System.out.println("TODO: Sort the list of animals by: " + sortBy);
+
+        Comparator comparator = null;
+
+        if (sortDirection == SortDirection.ASC){
+            switch (sortBy) {
+                case "age" -> {
+                    comparator = new AgeComparator();
+                    Collections.sort(animals, comparator);
+                }
+                case "name" -> {
+                    comparator = new NameComparator();
+                    Collections.sort(animals, comparator);
+                }
+                case "type" -> {
+                    comparator = new TypeComparator();
+                    Collections.sort(animals, comparator);
+                }
+                case "weight" -> {
+                    comparator = new WeightComparator();
+                    Collections.sort(animals, comparator);
+                }
+                default -> {
+                    comparator = new NameComparator();
+                    Collections.sort(animals, comparator);
+                }
+            }
+        } else if (sortDirection == SortDirection.DESC){
+
+            switch (sortBy) {
+                case "age" -> {
+                    comparator = new AgeComparator();
+                    Collections.sort(animals, comparator);
+                    Collections.reverse(animals);
+                }
+                case "name" -> {
+                    comparator = new NameComparator();
+                    Collections.sort(animals, comparator);
+                    Collections.reverse(animals);
+                }
+                case "type" -> {
+                    comparator = new TypeComparator();
+                    Collections.sort(animals, comparator);
+                    Collections.reverse(animals);
+                }
+                case "weight" -> {
+                    comparator = new WeightComparator();
+                    Collections.sort(animals, comparator);
+                    Collections.reverse(animals);
+                }
+                default -> {
+                    comparator = new NameComparator();
+                    Collections.sort(animals, comparator);
+                    Collections.reverse(animals);
+                }
+            }
+
+         } else if (sortDirection == SortDirection.TOGGLE){
+            Collections.reverse(animals);
+        }
+
+        System.out.println("Sort the list of animals by: " + sortBy);
     }
 
     public void createNewAnimal(String name, String description, String type, int age, double weight) {
